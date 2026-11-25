@@ -1,22 +1,45 @@
+from datetime import date
+
 import streamlit as st
 
 st.title("AI Traveller APP")
 
 Destination =st.text_input("Enter Destination:")
 Travel_date=st.date_input("Enter Travel Date:")
-budget=st.number_input("Enter Budget: ")
+budget=st.number_input("Enter Budget: ", min_value=0.0)
 
+travel_type_options = ["Solo", "Family", "Couple", "Business"]
 travel_type=st.selectbox(
     "Travel Type",
-    ["Solo","Family","Couple","Business"]
+    travel_type_options
     )
 
+interest_options = ["Beach", "Temple", "Adventure", "Nature"]
 interest =st.multiselect(
     "Interest",
-    ["Beach","Temple","Adventure","Nature"]
+    interest_options
 )
 
 if st.button("Submit"):
+    errors = {}
+    if not Destination.strip():
+        errors["Destination"] = "Enter a destination."
+    if Travel_date <= date.today():
+        errors["Travel Date"] = "Choose a travel date in the future."
+    if budget <= 0:
+        errors["Budget"] = "Budget must be greater than zero."
+    if travel_type not in travel_type_options:
+        errors["Travel Type"] = "Choose a valid travel type."
+    if not interest:
+        errors["Interest"] = "Select at least one interest."
+    elif any(item not in interest_options for item in interest):
+        errors["Interest"] = "Choose valid interests."
+
+    if errors:
+      for field, message in errors.items():
+        st.error(f"{field}: {message}")
+      st.stop()
+
     st.write("Budget Analysis")
 
     if budget < 10000:
