@@ -65,7 +65,7 @@ if st.button("Submit"):
     st.write(f"Recommended Stay : {hotel_type}")
 
 
-    st.write("## Travel Recommendation")
+    st.write("## Travel Recommendation ###")
 
     if travel_type == "Solo":
         st.info("Explore local attractions and backpacking routes.")
