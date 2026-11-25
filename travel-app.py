@@ -117,4 +117,6 @@ if st.button("Submit"):
     """)
     st.balloons()
 
+    st.snow()
+
 print("Thank you")
